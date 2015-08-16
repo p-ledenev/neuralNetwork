@@ -1,11 +1,15 @@
 package model;
 
 import org.apache.log4j.Logger;
-import org.neuroph.core.NeuralNetwork;
-import org.neuroph.core.data.DataSet;
-import org.neuroph.nnet.MultiLayerPerceptron;
-import org.neuroph.nnet.learning.ResilientPropagation;
-import org.neuroph.util.TransferFunctionType;
+import org.encog.Encog;
+import org.encog.engine.network.activation.ActivationTANH;
+import org.encog.ml.data.MLDataSet;
+import org.encog.ml.data.specific.CSVNeuralDataSet;
+import org.encog.neural.networks.BasicNetwork;
+import org.encog.neural.networks.layers.BasicLayer;
+import org.encog.neural.networks.training.propagation.resilient.ResilientPropagation;
+import org.encog.persist.EncogDirectoryPersistence;
+import org.encog.util.csv.CSVFormat;
 
 import java.io.File;
 
@@ -15,36 +19,51 @@ import java.io.File;
 public class Runner {
 
     public static String dataPath = "f:\\Teddy\\Alfa\\java\\v1.0\\neuralNetwork\\data\\";
-
+    public static String networkFileName = "network.eg";
     public static Logger logger = Logger.getLogger(Runner.class);
 
     public static void main(String[] args) throws Throwable {
+        BasicNetwork network;
 
-        NeuralNetwork net;
-        File netFile = new File(dataPath + "network.data");
-        if (netFile.exists()) {
-            logger.info("Init from file");
-            net = NeuralNetwork.createFromFile(netFile);
-        } else {
+        File file = new File(dataPath + networkFileName);
+        if (file.exists()) {
+            logger.info("Reading from file");
+            network = (BasicNetwork) EncogDirectoryPersistence.loadObject(new File(dataPath + networkFileName));
+        }
+        else {
             logger.info("Create new network");
-            net = new MultiLayerPerceptron(TransferFunctionType.TANH, 50, 100, 1);
+            network = createNewNetwork();
         }
 
-        logger.info("Start reading");
-        DataSet trainingSet = DataSet.createFromFile(dataPath + "usd_2010.txt", 50, 1, ";", false);
-        logger.info("Reading done");
+        MLDataSet trainingSet = new CSVNeuralDataSet(dataPath + "usd_2010.txt", 50, 1, false, new CSVFormat('.', ';'), false);
 
-        ResilientPropagation learningRule = new ResilientPropagation();
-        learningRule.setMaxError(0.001);
-        learningRule.setMaxIterations(1000);
+        ResilientPropagation training = new ResilientPropagation(network, trainingSet);
+        training.setError(1.);
 
-        learningRule.addListener(new EventPrinter());
-
-        logger.info("Start learning");
-        net.learnInNewThread(trainingSet, learningRule);
-        synchronized (net) {
-            net.wait();
+        for (int i = 0; i < 10; i++) {
+            training.iteration();
+            logger.info("Iteration: " + i + "; error: " + training.getError());
         }
-        logger.info("Learning finished");
+
+        training.finishTraining();
+
+        logger.info("Saving network");
+        EncogDirectoryPersistence.saveObject(new File(dataPath + networkFileName), network);
+
+        Encog.getInstance().shutdown();
+    }
+
+    private static BasicNetwork createNewNetwork() {
+
+        BasicNetwork network = new BasicNetwork();
+
+        network.addLayer(new BasicLayer(new ActivationTANH(), true, 50));
+        network.addLayer(new BasicLayer(new ActivationTANH(), true, 100));
+        network.addLayer(new BasicLayer(new ActivationTANH(), false, 1));
+
+        network.getStructure().finalizeStructure();
+        network.reset();
+
+        return network;
     }
 }
