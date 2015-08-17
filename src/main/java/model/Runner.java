@@ -9,6 +9,7 @@ import org.encog.neural.networks.*;
 import org.encog.neural.networks.layers.*;
 import org.encog.neural.networks.training.propagation.*;
 import org.encog.neural.networks.training.propagation.resilient.*;
+import org.encog.neural.rbf.RBFNetwork;
 import org.encog.persist.*;
 import org.encog.util.csv.*;
 
@@ -23,10 +24,12 @@ public class Runner {
     public static String dataPath = "d:\\Projects\\Alfa\\java\\nn\\neuralNetwork\\data\\";
 
     public static String networkFileName = "network.eg";
-    public static Logger logger = Logger.getLogger(Runner.class);
+
 
     public static void main(String[] args) throws Throwable {
-        BasicNetwork network;
+
+        NetworkFactory.rbfNetwork();
+
 
         File file = new File(dataPath + networkFileName);
         if (file.exists()) {
