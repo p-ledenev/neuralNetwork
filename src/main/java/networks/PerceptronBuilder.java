@@ -22,8 +22,8 @@ public class PerceptronBuilder extends NetworkBuilder {
 
         BasicNetwork network;
         //network = treeLayersNetwork(trainingSet);
-        //network = twoLayersNetwork(trainingSet);
-        network = fourLayersNetwork(trainingSet);
+        network = twoLayersNetwork(trainingSet);
+        //network = fourLayersNetwork(trainingSet);
 
         network.getStructure().finalizeStructure();
         network.reset();

@@ -28,8 +28,8 @@ public abstract class TrainingBuilder {
         return training;
     }
 
-    public void saveNetwork() {
-        networkBuilder.saveNetwork();
+    public void saveNetwork(String trainingDataTitle) {
+        networkBuilder.saveNetwork(trainingDataTitle);
     }
 
     protected abstract BasicTraining createTraining(BasicML network, MLDataSet trainingSet);

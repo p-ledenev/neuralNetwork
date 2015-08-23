@@ -18,7 +18,12 @@ public class Runner {
 
     public static void main(String[] args) throws Throwable {
 
-        MLDataSet trainingSet = new CSVNeuralDataSet(dataPath + "usd_50inputs_max-min_2010.txt", 50, 2, false, new CSVFormat('.', ';'), false);
+        String fileName = "";
+        //fileName = "usd_50inputs_max-min_2010.txt";
+        fileName = "usd_50inputs_app_2010.txt";
+
+        Log.info("Training data: " + fileName);
+        MLDataSet trainingSet = new CSVNeuralDataSet(dataPath + fileName, 50, 2, false, new CSVFormat('.', ';'), false);
 
         TrainingBuilder trainingBuilder;
         //trainingBuilder = TrainingBuilderFactory.createRBFTrainer();
@@ -29,7 +34,6 @@ public class Runner {
         //trainingBuilder = TrainingBuilderFactory.createScaledConjugateGradientTrainer();
         //trainingBuilder = TrainingBuilderFactory.createBayesianTrainer();
         //trainingBuilder = TrainingBuilderFactory.createSVNSearchTrainer();
-
 
         BasicTraining training = trainingBuilder.build(trainingSet);
         training.setError(1.);
@@ -42,7 +46,7 @@ public class Runner {
             if (i % 200 == 0) {
                 Log.info("Saving network");
                 training.finishTraining();
-                trainingBuilder.saveNetwork();
+                trainingBuilder.saveNetwork(fileName);
             }
         }
 

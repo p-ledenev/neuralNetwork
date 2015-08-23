@@ -23,7 +23,11 @@ public class NetworkTester {
     @Before
     public void setUp() throws Throwable {
 
-        dataSet = new CSVNeuralDataSet(Runner.dataPath + "usd_50inputs_max-min_2010.txt", 50, 2, false, new CSVFormat('.', ';'), false);
+        String fileName;
+        //fileName = "usd_50inputs_max-min_2010.txt";
+        fileName = "usd_50inputs_app_2010.txt";
+
+        dataSet = new CSVNeuralDataSet(Runner.dataPath + fileName, 50, 2, false, new CSVFormat('.', ';'), false);
         network = (BasicNetwork) new PerceptronBuilder().read();
     }
 

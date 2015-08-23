@@ -34,8 +34,8 @@ public abstract class NetworkBuilder {
         return network;
     }
 
-    public void saveNetwork() {
-        EncogDirectoryPersistence.saveObject(new File(Runner.dataPath + getName() + ".eg"), network);
+    public void saveNetwork(String trainingDataTitle) {
+        EncogDirectoryPersistence.saveObject(new File(Runner.dataPath + getName() + "_" + trainingDataTitle + ".eg"), network);
     }
 
     protected abstract String getName();
