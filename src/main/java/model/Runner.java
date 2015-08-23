@@ -12,9 +12,9 @@ import org.encog.util.csv.*;
  */
 public class Runner {
 
-    //public static String dataPath = "f:\\Teddy\\Alfa\\java\\v1.0\\neuralNetwork\\data\\";
+    public static String dataPath = "f:\\Teddy\\Alfa\\java\\v1.0\\neuralNetwork\\data\\";
     //public static String dataPath = "d:\\Projects\\Alfa\\java\\nn\\neuralNetwork\\data\\";
-    public static String dataPath = "./";
+    //public static String dataPath = "./";
 
     public static void main(String[] args) throws Throwable {
 

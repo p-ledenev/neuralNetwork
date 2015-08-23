@@ -25,11 +25,8 @@ public abstract class NetworkBuilder {
     public BasicML build(MLDataSet trainingSet) {
 
         if (networkExist()) {
-
-            Log.info("Reading network " + getName() + " from file");
-            network = (BasicML) EncogDirectoryPersistence.loadObject(new File(Runner.dataPath + getName() + ".eg"));
+            read();
         } else {
-
             Log.info("Creating new " + getName() + " network");
             network = createNetwork(trainingSet);
         }
@@ -44,4 +41,11 @@ public abstract class NetworkBuilder {
     protected abstract String getName();
 
     protected abstract BasicML createNetwork(MLDataSet trainingSet);
+
+    public BasicML read() {
+        Log.info("Reading network " + getName() + " from file");
+        network = (BasicML) EncogDirectoryPersistence.loadObject(new File(Runner.dataPath + getName() + ".eg"));
+
+        return network;
+    }
 }
