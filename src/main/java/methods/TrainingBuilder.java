@@ -1,10 +1,10 @@
 package methods;
 
-import model.*;
-import networks.*;
-import org.encog.ml.*;
-import org.encog.ml.data.*;
-import org.encog.ml.train.*;
+import model.Log;
+import networks.NetworkBuilder;
+import org.encog.ml.BasicML;
+import org.encog.ml.data.MLDataSet;
+import org.encog.ml.train.BasicTraining;
 
 /**
  * Created by ledenev.p on 18.08.2015.
@@ -28,8 +28,12 @@ public abstract class TrainingBuilder {
         return training;
     }
 
-    public void saveNetwork(String trainingDataTitle) {
-        networkBuilder.saveNetwork(trainingDataTitle);
+    public void saveNetwork() {
+        networkBuilder.saveNetwork();
+    }
+
+    public void setTrainingDataTitle(String trainingSetName) {
+        networkBuilder.setTrainingSetName(trainingSetName);
     }
 
     protected abstract BasicTraining createTraining(BasicML network, MLDataSet trainingSet);

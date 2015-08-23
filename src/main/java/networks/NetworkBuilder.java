@@ -14,11 +14,14 @@ import java.io.*;
 
 public abstract class NetworkBuilder {
 
+    @Setter
+    private String trainingSetName;
+
     @Getter
     protected BasicML network;
 
     protected boolean networkExist() {
-        File file = new File(Runner.dataPath + getName() + ".eg");
+        File file = new File(getFileName());
         return file.exists();
     }
 
@@ -34,8 +37,12 @@ public abstract class NetworkBuilder {
         return network;
     }
 
-    public void saveNetwork(String trainingDataTitle) {
-        EncogDirectoryPersistence.saveObject(new File(Runner.dataPath + getName() + "_" + trainingDataTitle + ".eg"), network);
+    public void saveNetwork() {
+        EncogDirectoryPersistence.saveObject(new File(getFileName()), network);
+    }
+
+    private String getFileName() {
+        return Runner.dataPath + getName() + "_" + trainingSetName + ".eg";
     }
 
     protected abstract String getName();
@@ -44,7 +51,7 @@ public abstract class NetworkBuilder {
 
     public BasicML read() {
         Log.info("Reading network " + getName() + " from file");
-        network = (BasicML) EncogDirectoryPersistence.loadObject(new File(Runner.dataPath + getName() + ".eg"));
+        network = (BasicML) EncogDirectoryPersistence.loadObject(new File(getFileName()));
 
         return network;
     }

@@ -21,8 +21,8 @@ public class PerceptronBuilder extends NetworkBuilder {
     protected BasicML createNetwork(MLDataSet trainingSet) {
 
         BasicNetwork network;
-        //network = treeLayersNetwork(trainingSet);
-        network = twoLayersNetwork(trainingSet);
+        network = treeLayersNetwork(trainingSet);
+        //network = twoLayersNetwork(trainingSet);
         //network = fourLayersNetwork(trainingSet);
 
         network.getStructure().finalizeStructure();
@@ -36,7 +36,6 @@ public class PerceptronBuilder extends NetworkBuilder {
         BasicNetwork network = new BasicNetwork();
 
         network.addLayer(new BasicLayer(new ActivationTANH(), true, trainingSet.getInputSize()));
-        network.addLayer(new BasicLayer(new ActivationTANH(), true, 75));
         network.addLayer(new BasicLayer(new ActivationTANH(), true, 50));
         network.addLayer(new BasicLayer(new ActivationTANH(), true, 25));
         network.addLayer(new BasicLayer(new ActivationTANH(), false, trainingSet.getIdealSize()));
