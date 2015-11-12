@@ -15,7 +15,7 @@ import org.junit.Test;
 /**
  * Created by DiKey on 22.08.2015.
  */
-public class NetworkTester {
+public class NetworkTrainigTests {
 
     BasicNetwork network;
     MLDataSet dataSet;
@@ -25,16 +25,15 @@ public class NetworkTester {
 
         String fileName;
         //fileName = "usd_50inputs_max-min_2010.txt";
-        fileName = "usd_50inputs_app_2010.txt";
+        fileName = "usd_app.txt";
 
-        dataSet = new CSVNeuralDataSet(Runner.dataPath + fileName, 50, 2, false, new CSVFormat('.', ';'), false);
+        dataSet = new CSVNeuralDataSet(Runner.dataPath + fileName, 100, 3, false, new CSVFormat('.', ';'), false);
         network = (BasicNetwork) new PerceptronBuilder().read();
     }
 
     @Test
     public void printTotalNetworkError() throws Throwable {
 
-        dataSet = new CSVNeuralDataSet(Runner.dataPath + "usd_sample.txt", 50, 2, false, new CSVFormat('.', ';'), false);
         printResults();
 
         Log.info("Total error on tutor set: " + network.calculateError(dataSet));
@@ -49,9 +48,19 @@ public class NetworkTester {
             set.add(pair);
 
             MLData output = network.compute(pair.getInput());
-            Log.info((i++) + " Tutor value: " + print(pair.getIdeal()) + "; Network value: " + print(output) +
-                    "; totalNetworkError: " + network.calculateError(set));
+
+            if (isBuySignal(pair.getIdeal()) || isSellSignal(pair.getIdeal()))
+                Log.info((i++) + " Tutor value: " + print(pair.getIdeal()) + "; Network value: " + print(output) +
+                        "; totalNetworkError: " + network.calculateError(set));
         }
+    }
+
+    private boolean isBuySignal(MLData output) {
+        return output.getData(0) == 1;
+    }
+
+    private boolean isSellSignal(MLData output) {
+        return output.getData(1) == 1;
     }
 
     private String print(MLData data) {

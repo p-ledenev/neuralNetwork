@@ -9,6 +9,7 @@ import networks.*;
 public class TrainingBuilderFactory {
 
     // no multithreads support
+    // SVD requires an output layer with a single neuron
     public static TrainingBuilder createRBFTrainer() {
         NetworkBuilder networkBuilder = new RBFNetworkBuilder();
         return new SVDTrainingBuilder(networkBuilder);
@@ -43,7 +44,7 @@ public class TrainingBuilderFactory {
         return new ScaledConjugateGradientTrainingBuilder(networkBuilder);
     }
 
-    // need some more details in input data
+    // no multithreads support
     public static TrainingBuilder createPNNTrainer() {
         NetworkBuilder networkBuilder = new PNNBuilder();
         return new PNNTrainingBuilder(networkBuilder);

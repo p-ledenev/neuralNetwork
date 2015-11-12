@@ -19,7 +19,8 @@ public class ResilientPropagationTrainingBuilder extends TrainingBuilder {
     @Override
     protected BasicTraining createTraining(BasicML network, MLDataSet trainingSet) {
 
-        ResilientPropagation training = new ResilientPropagation((BasicNetwork) network, trainingSet, 0.01, 100);
+        ResilientPropagation training = new ResilientPropagation((BasicNetwork) network, trainingSet);
+        training.setThreadCount(2);
 
         return training;
     }

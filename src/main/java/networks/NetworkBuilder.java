@@ -20,14 +20,14 @@ public abstract class NetworkBuilder {
     @Getter
     protected BasicML network;
 
-    protected boolean networkExist() {
+    protected boolean networkDataExist() {
         File file = new File(getFileName());
         return file.exists();
     }
 
     public BasicML build(MLDataSet trainingSet) {
 
-        if (networkExist()) {
+        if (networkDataExist()) {
             read();
         } else {
             Log.info("Creating new " + getName() + " network");
@@ -42,7 +42,12 @@ public abstract class NetworkBuilder {
     }
 
     private String getFileName() {
-        return Runner.dataPath + getName() + "_" + trainingSetName + ".eg";
+
+        String fileName = getName();
+        if (trainingSetName != null)
+            fileName += "_" + trainingSetName;
+
+        return Runner.dataPath + fileName + ".eg";
     }
 
     protected abstract String getName();

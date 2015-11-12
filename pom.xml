@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>neural.network</groupId>
-    <artifactId>sample</artifactId>
+    <artifactId>training</artifactId>
     <version>1.0</version>
 
     <dependencies>
@@ -38,11 +38,10 @@
             <artifactId>encog-core</artifactId>
             <version>3.3.0</version>
         </dependency>
-
     </dependencies>
 
     <build>
-        <finalName>nn.sample</finalName>
+        <finalName>nn.training</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

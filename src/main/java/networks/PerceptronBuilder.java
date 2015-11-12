@@ -21,9 +21,9 @@ public class PerceptronBuilder extends NetworkBuilder {
     protected BasicML createNetwork(MLDataSet trainingSet) {
 
         BasicNetwork network;
-        network = treeLayersNetwork(trainingSet);
-        //network = twoLayersNetwork(trainingSet);
-        //network = fourLayersNetwork(trainingSet);
+        //network = threeLayersNetwork(trainingSet);
+        network = fourLayersNetwork(trainingSet);
+        //network = fiveLayersNetwork(trainingSet);
 
         network.getStructure().finalizeStructure();
         network.reset();
@@ -31,19 +31,23 @@ public class PerceptronBuilder extends NetworkBuilder {
         return network;
     }
 
-    private BasicNetwork treeLayersNetwork(MLDataSet trainingSet) {
+    private BasicNetwork fourLayersNetwork(MLDataSet trainingSet) {
 
         BasicNetwork network = new BasicNetwork();
 
         network.addLayer(new BasicLayer(new ActivationTANH(), true, trainingSet.getInputSize()));
-        network.addLayer(new BasicLayer(new ActivationTANH(), true, 50));
-        network.addLayer(new BasicLayer(new ActivationTANH(), true, 25));
+        network.addLayer(new BasicLayer(new ActivationTANH(), true, 4));
+        network.addLayer(new BasicLayer(new ActivationTANH(), true, 4));
+        network.addLayer(new BasicLayer(new ActivationTANH(), true, 4));
+        network.addLayer(new BasicLayer(new ActivationTANH(), true, 4));
+        network.addLayer(new BasicLayer(new ActivationTANH(), true, 4));
+        network.addLayer(new BasicLayer(new ActivationTANH(), true, 4));
         network.addLayer(new BasicLayer(new ActivationTANH(), false, trainingSet.getIdealSize()));
 
         return network;
     }
 
-    private BasicNetwork twoLayersNetwork(MLDataSet trainingSet) {
+    private BasicNetwork threeLayersNetwork(MLDataSet trainingSet) {
 
         BasicNetwork network = new BasicNetwork();
 
@@ -54,13 +58,11 @@ public class PerceptronBuilder extends NetworkBuilder {
         return network;
     }
 
-    private BasicNetwork fourLayersNetwork(MLDataSet trainingSet) {
+    private BasicNetwork fiveLayersNetwork(MLDataSet trainingSet) {
 
         BasicNetwork network = new BasicNetwork();
 
         network.addLayer(new BasicLayer(new ActivationTANH(), true, trainingSet.getInputSize()));
-        network.addLayer(new BasicLayer(new ActivationTANH(), true, 50));
-        network.addLayer(new BasicLayer(new ActivationTANH(), true, 50));
         network.addLayer(new BasicLayer(new ActivationTANH(), true, 50));
         network.addLayer(new BasicLayer(new ActivationTANH(), true, 50));
         network.addLayer(new BasicLayer(new ActivationTANH(), false, trainingSet.getIdealSize()));

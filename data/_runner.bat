@@ -1,0 +1,1 @@
+java -jar nn.training-jar-with-dependencies.jar

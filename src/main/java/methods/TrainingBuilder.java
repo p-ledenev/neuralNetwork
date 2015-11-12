@@ -37,4 +37,8 @@ public abstract class TrainingBuilder {
     }
 
     protected abstract BasicTraining createTraining(BasicML network, MLDataSet trainingSet);
+
+    public BasicML getNetwork() {
+        return networkBuilder.getNetwork();
+    }
 }
